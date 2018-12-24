@@ -1,4 +1,7 @@
-source /opt/docker/bin/functions.sh
+###
+ # Common Functions
+ ##
+source "$DOCKER_CONF_PATH/bin/functions.sh"
 
 # Create app group
 groupadd -g $ELASTIC_GID $ELASTIC_GROUP

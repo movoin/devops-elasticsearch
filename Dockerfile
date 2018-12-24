@@ -2,11 +2,10 @@
 # Docker Image      movoin/devops-elasticsearch
 #
 # MAINTAINER        Allen Luo <movoin@gmail.com>
-# DOCKER-VERSION    1.12.3
+# DOCKER-VERSION    18.09.0
 #
 
-FROM        movoin/devops-java
-MAINTAINER  Allen Luo <movoin@gmail.com>
+FROM movoin/devops-java
 
 ENV ELASTIC_VERSION     6.3.2
 ENV ELASTIC_URL         "https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-${ELASTIC_VERSION}.tar.gz"
@@ -24,15 +23,10 @@ ENV ELASTIC_PATH_LOGS   /opt/logs/elastic
 ENV ELASTIC_HOST        0.0.0.0
 ENV ELASTIC_PORT        9200
 
-COPY conf/ /opt/docker/
+COPY conf/ $DOCKER_CONF_PATH
 
 RUN set -x \
-    # Install
-    && /opt/docker/bin/install.sh \
     # Bootstrap
-    && /opt/docker/bin/bootstrap.sh \
-    # Clean
-    && yum clean all \
-    && rm -rf /var/cache/yum
+    && $DOCKER_CONF_PATH/bin/bootstrap.sh
 
 EXPOSE $ELASTIC_PORT
